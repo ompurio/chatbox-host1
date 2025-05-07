@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Mini Chat</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+    }
+    .chat-container {
+      max-width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .chat-box {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+      background: #f9f9f9;
+    }
+    .input-box {
+      display: flex;
+      border-top: 1px solid #ccc;
+    }
+    .input-box input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      outline: none;
+    }
+    .input-box button {
+      padding: 10px 15px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .message {
+      margin: 5px 0;
+    }
+    .user { text-align: right; color: #333; }
+    .bot { text-align: left; color: #00796B; }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div id="chat" class="chat-box"></div>
+    <div class="input-box">
+      <input type="text" id="input" placeholder="Ask something...">
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    function sendMessage() {
+      var input = document.getElementById("input");
+      var msg = input.value.trim();
+      if (!msg) return;
+      var chat = document.getElementById("chat");
+
+      var userMsg = document.createElement("div");
+      userMsg.className = "message user";
+      userMsg.textContent = "You: " + msg;
+      chat.appendChild(userMsg);
+
+      var botMsg = document.createElement("div");
+      botMsg.className = "message bot";
+      botMsg.textContent = "Bot: " + getBotReply(msg);
+      chat.appendChild(botMsg);
+
+      chat.scrollTop = chat.scrollHeight;
+      input.value = "";
+    }
+
+    function getBotReply(msg) {
+      msg = msg.toLowerCase();
+      if (msg.includes("hello") || msg.includes("hi")) return "Hello! How can I help you today?";
+      if (msg.includes("bookmarked")) return "Check your bookmarks: https://diageo.edcast.com/me/learning/bookmarked";
+      if (msg.includes("completed")) return "View completed training: https://diageo.edcast.com/me/learning/completed";
+      if (msg.includes("support")) return "Contact support@yourcompany.com for help.";
+      if (msg.includes("training")) return "You can find training in the 'My Learning' tab.";
+      return "Sorry, I didn’t understand that. Try asking about bookmarks, training, or support.";
+    }
+  </script>
+</body>
+</html>
